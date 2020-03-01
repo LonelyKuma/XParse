@@ -1,8 +1,6 @@
 import assert from 'assert';
-import { ParserConfig, Production } from './type';
+import { ParserConfig, Production, START } from './type';
 import { FirstSet } from './first';
-
-const START = '__START__';
 
 class Item {
   production: Production;

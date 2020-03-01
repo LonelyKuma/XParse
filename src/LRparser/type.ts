@@ -1,5 +1,7 @@
 export const Epsilon = '__Epsilon__';
 
+export const START = '__START__';
+
 export interface ParserHooks {}
 
 export interface ProductionRightRule {

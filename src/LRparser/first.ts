@@ -80,10 +80,10 @@ export class FirstSet {
     while (true) {
       let haveNew = 0;
       for (const { left, right } of productions) {
-        let isBreak = false;
         if (right.length === 0 || (right.length === 1 && right[0] === '')) {
           this.isEpsilon.add(left);
         } else {
+          let isBreak = false;
           for (const item of right) {
             if (this.isTerminal(item)) {
               haveNew += this.addFirst(left, item);
@@ -99,9 +99,9 @@ export class FirstSet {
               }
             }
           }
-        }
-        if (!isBreak) {
-          this.isEpsilon.add(left);
+          if (!isBreak) {
+            this.isEpsilon.add(left);
+          }
         }
       }
       if (!haveNew) break;
