@@ -1,0 +1,32 @@
+{
+  "name": "xparse",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "XLor",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "yarn tsc",
+    "lint": "yarn prettier --parser typescript --write src/**/*.ts",
+    "test": "yarn jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --parser=typescript --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3"
+  }
+}
