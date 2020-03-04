@@ -439,6 +439,13 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@yjl9903/setmap@^1.0.5":
+  version "1.0.5"
+  resolved "https://npm.pkg.github.com/download/@yjl9903/setmap/1.0.5/9505ffb7c97716674859d445b368e8ef5b4c182679510a6ce4ed9a775159dd87#a74d33b034b32f4599a6fc1aeb64fc8351feaf0d"
+  integrity sha512-8T0dZS4Wyye2xJrR7WRdnNztqXDyyRNjBcDEdxz6xELU3k46KMqAndfM/QDT0P/UT1tNEwGBvqzbqv3SJdKBGA==
+  dependencies:
+    random-js "^2.1.0"
+
 abab@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"

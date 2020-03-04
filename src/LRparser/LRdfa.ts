@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { ParserConfig, Production, START, Epsilon, Dollar } from './type';
 import { FirstSet } from './first';
-import { DiffSet } from './diffSet';
+import { SetMap } from '@yjl9903/setmap';
 
 function groupBy(productions: Production[]) {
   const map = new Map<string, Production[]>();
@@ -44,6 +44,8 @@ export class LRDFA {
   readonly types: Set<string>;
   readonly productions: Production[];
   readonly items: Item[][];
+  readonly Action: Map<string, Production | number | 'Accepted'>[];
+  readonly Goto: Map<string, number>[];
 
   private reportError(msg: string) {
     throw new Error(`XParse Build LR automaton failed, ${msg}`);
@@ -102,7 +104,11 @@ export class LRDFA {
       return itemCache.push(x), x;
     };
 
+    const closureCache = new SetMap<Item, Item[]>();
     const closure = (I: Item[]) => {
+      if (closureCache.has(I)) {
+        return closureCache.get(I);
+      }
       const ans = new Set<Item>(I);
       while (true) {
         let haveNew = 0;
@@ -127,7 +133,9 @@ export class LRDFA {
         }
         if (haveNew === 0) break;
       }
-      return [...ans];
+      const r = [...ans];
+      closureCache.set(I, r);
+      return r;
     };
     const move = (I: Item[], w: string) => {
       const ans: Item[] = [];
@@ -149,8 +157,7 @@ export class LRDFA {
 
     const st = getItem(new Item(this.productions[0], 0, Dollar));
     const C = [closure([st])];
-    const hsh = new DiffSet<Item>();
-    const hshSet = new Set<number>([hsh.getSet(C[0])]);
+    const setMap = new SetMap<Item, number>([C[0], 0]);
 
     while (true) {
       let haveNew = 0;
@@ -158,9 +165,7 @@ export class LRDFA {
         for (const ch of allT) {
           const v = move(item, ch);
           if (v.length === 0) continue;
-          const val = hsh.getSet(v);
-          if (!hshSet.has(val)) {
-            hshSet.add(val);
+          if (setMap.add(v, C.length)) {
             C.push(v);
           }
         }
@@ -179,5 +184,54 @@ export class LRDFA {
     //   console.log();
     // };
     // C.forEach(x => print(x))
+
+    const Action = C.map(
+      () => new Map<string, Production | number | 'Accepted'>()
+    );
+    const Goto = C.map(() => new Map<string, number>());
+    for (let i = 0; i < C.length; i++) {
+      const I = C[i];
+      for (const item of I) {
+        assert(this.isTerminal(item.lookup));
+        if (item.pos === item.production.right.length) {
+          const act: 'Accepted' | Production =
+            item.production === this.productions[0] &&
+            item.pos === 1 &&
+            item.lookup === Dollar
+              ? 'Accepted'
+              : item.production;
+          if (
+            Action[i].has(item.lookup) &&
+            Action[i].get(item.lookup) !== act
+          ) {
+            if (typeof Action[i].get(item.lookup) === 'number') {
+              this.reportError('shift-reduce conflict');
+            } else {
+              this.reportError('reduce-reduce conflict');
+            }
+          }
+          Action[i].set(item.lookup, act);
+        } else {
+          const ch = item.production.right[item.pos];
+          const v = move(I, ch);
+          if (v.length > 0) {
+            const j = setMap.get(v);
+            if (this.isTerminal(ch)) {
+              if (Action[i].has(ch) && Action[i].get(ch) !== j) {
+                this.reportError('shift-reduce conflict');
+              }
+              Action[i].set(ch, j);
+            } else {
+              if (Goto[i].has(ch) && Goto[i].get(ch) !== j) {
+                this.reportError('construct Goto failed');
+              }
+              Goto[i].set(ch, j);
+            }
+          }
+        }
+      }
+    }
+    this.Action = Action;
+    this.Goto = Goto;
   }
 }
