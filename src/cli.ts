@@ -3,7 +3,6 @@
 import path from 'path';
 import { readFileSync } from 'fs';
 import { cac } from 'cac';
-import readline from 'readline';
 
 import { LRParser } from './LRparser';
 
