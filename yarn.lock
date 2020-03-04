@@ -441,8 +441,8 @@
 
 "@yjl9903/setmap@^1.0.5":
   version "1.0.5"
-  resolved "https://npm.pkg.github.com/download/@yjl9903/setmap/1.0.5/9505ffb7c97716674859d445b368e8ef5b4c182679510a6ce4ed9a775159dd87#a74d33b034b32f4599a6fc1aeb64fc8351feaf0d"
-  integrity sha512-8T0dZS4Wyye2xJrR7WRdnNztqXDyyRNjBcDEdxz6xELU3k46KMqAndfM/QDT0P/UT1tNEwGBvqzbqv3SJdKBGA==
+  resolved "https://registry.yarnpkg.com/@yjl9903/setmap/-/setmap-1.0.5.tgz#556c489d8178f040f9aba419e0c11f8aa77b356b"
+  integrity sha512-a6xssLNFUUrp5i+fKVYumCskvG/h3hxD0TmbOjZ3a6Bv8XRvARza26Pc9eXYGzsDpWW3cYBLDPT2PZE5AkOFEg==
   dependencies:
     random-js "^2.1.0"
 
