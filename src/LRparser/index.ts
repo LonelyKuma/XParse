@@ -41,30 +41,42 @@ export class LRParser {
 
   run(tokens: Generator<Token>) {
     let curCh = tokens.next().value;
-    const stk = [0];
+    const stk: number[] = [0];
+    const val: any[] = [undefined];
     while (true) {
       const state = stk[stk.length - 1];
       if (this.action[state].has(curCh.type)) {
         const act = this.action[state].get(curCh.type);
         if (typeof act === 'number') {
           stk.push(act);
+          val.push(curCh);
           curCh = tokens.next().value;
         } else if (typeof act === 'object') {
+          const args: any[] = [];
           for (let i = 0; i < act.right.length; i++) {
             stk.pop();
+            args.push(val.pop());
           }
           const state = this.goto[stk[stk.length - 1]].get(act.left) as number;
           stk.push(state);
+          args.reverse();
+          val.push(act.reduce ? act.reduce(...args) : undefined);
           // report Production
         } else if (act === 'Accepted') {
           break;
         }
       } else {
         // report Error
-        return false;
+        return {
+          ok: false,
+          token: curCh
+        };
       }
     }
-    return true;
+    return {
+      ok: true,
+      value: val[1]
+    };
   }
 
   parse(tokens: Generator<Token> | Array<Token>) {

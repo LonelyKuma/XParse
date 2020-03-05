@@ -7,8 +7,8 @@ module.exports = {
     'Minus',
     'Mul',
     'Div',
-    'LBracket',
-    'RBracket'
+    'LRound',
+    'RRound'
   ],
   types: [
     'calculator',
@@ -22,18 +22,27 @@ module.exports = {
       right: [
         {
           rule: [
-            'term', 'Plus', 'term'
-          ]
+            'term', 'Plus', 'calculator'
+          ],
+          reduce(l, m, r) {
+            return l + r;
+          }
         },
         {
           rule: [
-            'term', 'Minus', 'term'
-          ]
+            'term', 'Minus', 'calculator'
+          ],
+          reduce(l, m, r) {
+            return l - r;
+          }
         },
         {
           rule: [
             'term'
-          ]
+          ],
+          reduce(value) {
+            return value;
+          }
         }
       ]
     },
@@ -42,18 +51,27 @@ module.exports = {
       right: [
         {
           rule: [
-            'factor', 'Mul', 'factor'
-          ]
+            'factor', 'Mul', 'term'
+          ],
+          reduce(l, m, r) {
+            return l * r;
+          }
         },
         {
           rule: [
-            'factor', 'Div', 'factor'
-          ]
+            'factor', 'Div', 'term'
+          ],
+          reduce(l, m, r) {
+            return l / r;
+          }
         },
         {
           rule: [
             'factor'
-          ]
+          ],
+          reduce(value) {
+            return value;
+          }
         }
       ]
     },
@@ -62,18 +80,43 @@ module.exports = {
       right: [
         {
           rule: [
+            'Plus', 'Number'
+          ],
+          reduce(m, { value }) {
+            return value;
+          }
+        },
+        {
+          rule: [
+            'Minus', 'Number'
+          ],
+          reduce(m, { value }) {
+            return -value;
+          }
+        },
+        {
+          rule: [
             'Number'
-          ]
+          ],
+          reduce({ value }) {
+            return value;
+          }
         },
         {
           rule: [
             'Float'
-          ]
+          ],
+          reduce({ value }) {
+            return value;
+          }
         },
         {
           rule: [
-            'LBracket', 'calculator', 'RBracket'
-          ]
+            'LRound', 'calculator', 'RRound'
+          ],
+          reduce(l, value) {
+            return value;
+          }
         }
       ]
     }

@@ -1,4 +1,4 @@
-import { LRParser, Token } from '../src/LRparser';
+import { LRParser, Token, Dollar } from '../src';
 
 test('LRDFA', () => {
   const config = {
@@ -10,7 +10,10 @@ test('LRDFA', () => {
         left: 'S',
         right: [
           {
-            rule: ['C', 'C']
+            rule: ['C', 'C'],
+            reduce(l: number, r: number) {
+              return l + r;
+            }
           }
         ]
       },
@@ -18,10 +21,16 @@ test('LRDFA', () => {
         left: 'C',
         right: [
           {
-            rule: ['c', 'C']
+            rule: ['c', 'C'],
+            reduce(token: Token, C: number) {
+              return 1 + C;
+            }
           },
           {
-            rule: ['d']
+            rule: ['d'],
+            reduce() {
+              return 0;
+            }
           }
         ]
       }
@@ -38,11 +47,17 @@ test('LRDFA', () => {
       new Token({ type: 'c', value: 'c' }, 0, 4, 1),
       new Token({ type: 'd', value: 'd' }, 0, 5, 1)
     ])
-  ).toBeTruthy();
+  ).toStrictEqual({
+    ok: true,
+    value: 4
+  });
 
   expect(
     parser.parse([new Token({ type: 'c', value: 'c' }, 0, 0, 1)])
-  ).toBeFalsy();
+  ).toStrictEqual({
+    ok: false,
+    token: new Token({ type: Dollar, value: Dollar }, -1, -1, -1)
+  });
 
   expect(
     parser.parse([
@@ -50,5 +65,8 @@ test('LRDFA', () => {
       new Token({ type: 'd', value: 'd' }, 0, 1, 1),
       new Token({ type: 'd', value: 'd' }, 0, 2, 1)
     ])
-  ).toBeFalsy();
+  ).toStrictEqual({
+    ok: false,
+    token: new Token({ type: 'd', value: 'd' }, 0, 2, 1)
+  });
 });

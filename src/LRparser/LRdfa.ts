@@ -67,7 +67,9 @@ export class LRDFA {
     this.types.add(START);
 
     assert(this.isTerminal(config.start) === false);
-    this.productions = [{ left: START, right: [config.start] }];
+    this.productions = [
+      { left: START, right: [config.start], reduce: value => value }
+    ];
 
     for (let i = 0; i < config.productions.length; i++) {
       const { left, right } = config.productions[i];
