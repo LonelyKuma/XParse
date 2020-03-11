@@ -1,5 +1,5 @@
 {
-  "name": "xparse",
+  "name": "@yjl9903/xparse",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
