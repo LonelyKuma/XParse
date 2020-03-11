@@ -1,4 +1,5 @@
-import { LRParser, Token, Dollar } from '../src';
+import { Token } from 'xlex';
+import { LRParser, Dollar } from '../src';
 
 test('LRDFA', () => {
   const config = {

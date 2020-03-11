@@ -1,3 +1,3 @@
-export { LRParser, Token } from './LRparser';
+export { LRParser } from './LRparser';
 
 export { Epsilon, Dollar } from './LRparser/type';
