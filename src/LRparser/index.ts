@@ -1,20 +1,26 @@
 import { Token } from 'xlex';
-import { ParserConfig, Production, Dollar } from './type';
+import { ParserConfig, Production, Dollar, ParserHooks } from './type';
 import { LRDFA } from './LRdfa';
 
 export class LRParser {
   dfa: LRDFA;
+  private readonly hooks?: ParserHooks;
 
   readonly action: Map<string, Production | number | string>[];
   readonly goto: Map<string, number>[];
 
   constructor(config: ParserConfig) {
+    this.hooks = config.hooks;
     this.dfa = new LRDFA(config);
     this.action = this.dfa.Action;
     this.goto = this.dfa.Goto;
   }
 
   run(tokens: Generator<Token>) {
+    if (this.hooks?.beforeCreate) {
+      this.hooks.beforeCreate();
+    }
+
     let curCh = tokens.next().value;
     const stk: number[] = [0];
     const val: any[] = [undefined];

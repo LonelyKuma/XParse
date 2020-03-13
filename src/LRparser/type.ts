@@ -4,7 +4,9 @@ export const Dollar = '__Dollar__';
 
 export const START = '__START__';
 
-export interface ParserHooks {}
+export interface ParserHooks {
+  beforeCreate?: () => any;
+}
 
 export interface ProductionRightRule {
   rule: string[];
