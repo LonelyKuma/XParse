@@ -21,7 +21,7 @@ export class FirstSet {
         return 0;
       } else {
         arr.push(y);
-        return 0;
+        return 1;
       }
     }
   }

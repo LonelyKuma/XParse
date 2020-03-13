@@ -34,3 +34,63 @@ test('FirstSet', () => {
   expect(first.query('a', 'S')).toStrictEqual(['a']);
   expect(first.query('c')).toStrictEqual(['c']);
 });
+
+test('FirstSet2', () => {
+  const first = new FirstSet(
+    new Set([
+      'LBrace',
+      'RBrace',
+      'Semicolon',
+      'Number',
+      'Plus',
+      'Mul',
+      'LRound',
+      'RRound',
+      '$'
+    ]),
+    new Set(['StatmentList', 'Statement', 'Expression', 'Term', 'Factor']),
+    [
+      {
+        left: 'StatmentList',
+        right: ['Statement', 'StatmentList']
+      },
+      { left: 'StatmentList', right: [] },
+      {
+        left: 'Statement',
+        right: ['LBrace', 'StatmentList', 'RBrace']
+      },
+      {
+        left: 'Statement',
+        right: ['Expression', 'Semicolon']
+      },
+      {
+        left: 'Expression',
+        right: ['Term', 'Plus', 'Expression']
+      },
+      { left: 'Expression', right: ['Term'] },
+      {
+        left: 'Term',
+        right: ['Factor', 'Mul', 'Term']
+      },
+      { left: 'Term', right: ['Factor'] },
+      { left: 'Factor', right: ['Number'] },
+      {
+        left: 'Factor',
+        right: ['LRound', 'Expression', 'RRound']
+      }
+    ]
+  );
+
+  expect(first.query('Expression')).toStrictEqual(['LRound', 'Number']);
+  expect(first.query('Statement')).toStrictEqual([
+    'LBrace',
+    'LRound',
+    'Number'
+  ]);
+  expect(first.query('StatmentList', '$')).toStrictEqual([
+    '$',
+    'LBrace',
+    'LRound',
+    'Number'
+  ]);
+});
