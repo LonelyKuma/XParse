@@ -6,6 +6,7 @@ export const START = '__START__';
 
 export interface ParserHooks {
   beforeCreate?: () => any;
+  created?: (value: any) => any;
 }
 
 export interface ProductionRightRule {

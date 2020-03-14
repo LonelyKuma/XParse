@@ -54,10 +54,17 @@ export class LRParser {
         };
       }
     }
-    return {
-      ok: true,
-      value: val[1]
-    };
+    if (this.hooks?.created) {
+      return {
+        ok: true,
+        value: this.hooks.created(val[1])
+      };
+    } else {
+      return {
+        ok: true,
+        value: val[1]
+      };
+    }
   }
 
   parse(tokens: Generator<Token> | Array<Token>) {
