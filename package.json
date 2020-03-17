@@ -1,6 +1,6 @@
 {
   "name": "@yjl9903/xparse",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [
