@@ -16,9 +16,9 @@ export class LRParser {
     this.goto = this.dfa.Goto;
   }
 
-  run(tokens: Generator<Token>) {
+  run(tokens: Generator<Token>, ...args: any[]) {
     if (this.hooks?.beforeCreate) {
-      this.hooks.beforeCreate();
+      this.hooks.beforeCreate(...args);
     }
 
     let curCh = tokens.next().value;
@@ -57,7 +57,7 @@ export class LRParser {
     if (this.hooks?.created) {
       return {
         ok: true,
-        value: this.hooks.created(val[1])
+        value: this.hooks.created(val[1], ...args)
       };
     } else {
       return {
@@ -67,7 +67,7 @@ export class LRParser {
     }
   }
 
-  parse(tokens: Generator<Token> | Array<Token>) {
+  parse(tokens: Generator<Token> | Array<Token>, ...args: any[]) {
     function* gen() {
       yield* tokens;
       const EOF = new Token({ type: Dollar, value: Dollar }, -1, -1, -1);
@@ -75,6 +75,6 @@ export class LRParser {
         yield EOF;
       }
     }
-    return this.run(gen());
+    return this.run(gen(), ...args);
   }
 }
