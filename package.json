@@ -1,6 +1,6 @@
 {
   "name": "@yjl9903/xparse",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [
@@ -47,6 +47,6 @@
   "dependencies": {
     "@yjl9903/setmap": "^1.0.5",
     "cac": "^6.5.6",
-    "xlex": "^1.3.3"
+    "xlex": "^1.4.0"
   }
 }
