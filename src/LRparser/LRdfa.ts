@@ -169,6 +169,7 @@ export class LRDFA {
           if (v.length === 0) continue;
           if (setMap.add(v, C.length)) {
             C.push(v);
+            haveNew++;
           }
         }
       }
