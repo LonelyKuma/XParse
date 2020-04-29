@@ -123,29 +123,27 @@ export class LRDFA {
       if (closureCache.has(I)) {
         return closureCache.get(I);
       }
-      const ans = new Set<Item>(I);
-      while (true) {
-        let haveNew = 0;
-        const add = (x: Item) => {
-          if (ans.has(x)) return;
-          ans.add(x);
-          haveNew++;
-        };
-        for (const item of ans) {
-          if (item.pos >= item.production.right.length) {
-            continue;
-          }
-          const B = item.production.right[item.pos];
-          const firstBeta = firstSet.query(
-            ...item.production.right.slice(item.pos + 1).concat(item.lookup)
-          );
-          for (const prod of group.get(B) || []) {
-            for (const b of firstBeta) {
-              add(getItem(new Item(prod, 0, b)));
+      const ans = new Set(I);
+      const WL = new Queue(...I);
+      while (!WL.isEmpty()) {
+        const cur = WL.front();
+        WL.pop();
+        if (cur.pos >= cur.production.right.length) {
+          continue;
+        }
+        const B = cur.production.right[cur.pos];
+        const firstBeta = firstSet.query(
+          ...cur.production.right.slice(cur.pos + 1).concat(cur.lookup)
+        );
+        for (const prod of group.get(B) || []) {
+          for (const b of firstBeta) {
+            const item = getItem(new Item(prod, 0, b));
+            if (!ans.has(item)) {
+              ans.add(item);
+              WL.push(item);
             }
           }
         }
-        if (haveNew === 0) break;
       }
       const r = [...ans];
       closureCache.set(I, r);
