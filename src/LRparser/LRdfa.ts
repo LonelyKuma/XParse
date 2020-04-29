@@ -2,6 +2,7 @@ import assert from 'assert';
 import { ParserConfig, Production, START, Epsilon, Dollar } from './type';
 import { FirstSet } from './first';
 import { SetMap } from '@yjl9903/setmap';
+import { Queue } from '../utils/queue';
 
 function groupBy(productions: Production[]) {
   const map = new Map<string, Production[]>();
@@ -49,6 +50,17 @@ export class LRDFA {
 
   private reportError(msg: string) {
     throw new Error(`XParse Build LR automaton failed, ${msg}`);
+  }
+
+  private reportDebug() {
+    const print = (obj: Item[], id: number) => {
+      console.log(id + ': ');
+      for (const x of obj) {
+        console.log(x.print());
+      }
+      console.log();
+    };
+    this.items.forEach((x, id) => print(x, id));
   }
 
   isTerminal(name: string) {
@@ -159,34 +171,24 @@ export class LRDFA {
 
     const st = getItem(new Item(this.productions[0], 0, Dollar));
     const C = [closure([st])];
+    const WL = new Queue(C[0]);
     const setMap = new SetMap<Item, number>([C[0], 0]);
 
-    while (true) {
-      let haveNew = 0;
-      for (const item of C) {
-        for (const ch of allT) {
-          const v = move(item, ch);
-          if (v.length === 0) continue;
-          if (setMap.add(v, C.length)) {
-            C.push(v);
-            haveNew++;
-          }
+    while (!WL.isEmpty()) {
+      const cur = WL.front();
+      WL.pop();
+      for (const ch of allT) {
+        const v = move(cur, ch);
+        if (v.length === 0) continue;
+        if (setMap.add(v, C.length)) {
+          C.push(v);
+          WL.push(v);
         }
       }
-      if (haveNew === 0) break;
     }
 
     this.items = C;
-
-    // let i = 0;
-    // const print = (obj: Item[]) => {
-    //   console.log(i++ + ': ');
-    //   for (const x of obj) {
-    //     console.log(x.print());
-    //   }
-    //   console.log();
-    // };
-    // C.forEach(x => print(x))
+    // this.reportDebug();
 
     const Action = C.map(
       () => new Map<string, Production | number | 'Accepted'>()
