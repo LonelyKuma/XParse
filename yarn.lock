@@ -3911,14 +3911,14 @@ ws@^7.0.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
   integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
 
-xlex@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/xlex/-/xlex-1.4.0.tgz#4903afa00d207e6a2243a0c007a236995d5ec575"
-  integrity sha512-vnCkQFAGZN7JJxpF28EXJNlFX3mDcmN1l0Od/LEfFhQ8p2vYGSY0cqXS8a6YPhbBmQa8TUtMUA1tQ4Z+b8SZfA==
+xlex@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/xlex/-/xlex-1.4.2.tgz#10b4d45acb8624416fc18a78105564805ee00697"
+  integrity sha512-Vostd0oFJTuYEGIQeBLkELq8dVmLKVQS7A6mU8H6lOHHBO+SoGLpjlfyNNaZAbgHWLuhrOo6GGEvRnv9oNmVkw==
   dependencies:
+    "@yjl9903/setmap" "^1.0.6"
     cac "^6.5.6"
     graphviz "^0.0.9"
-    random-js "^2.1.0"
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
