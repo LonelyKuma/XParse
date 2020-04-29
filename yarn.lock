@@ -439,10 +439,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@yjl9903/setmap@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@yjl9903/setmap/-/setmap-1.0.5.tgz#556c489d8178f040f9aba419e0c11f8aa77b356b"
-  integrity sha512-a6xssLNFUUrp5i+fKVYumCskvG/h3hxD0TmbOjZ3a6Bv8XRvARza26Pc9eXYGzsDpWW3cYBLDPT2PZE5AkOFEg==
+"@yjl9903/setmap@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@yjl9903/setmap/-/setmap-1.0.6.tgz#fc30186e37b7ca735f9787330433bfb01f2dc51f"
+  integrity sha512-HZehrh8cwTuJUlt7Rd4ay1dhTNir4YQlzVg35q8quoewszVxpTwmddkfsvN6tRbY+rBVl4MJNFLJ8E/7pl2KgQ==
   dependencies:
     random-js "^2.1.0"
 

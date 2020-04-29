@@ -45,7 +45,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@yjl9903/setmap": "^1.0.5",
+    "@yjl9903/setmap": "^1.0.6",
     "cac": "^6.5.6",
     "xlex": "^1.4.0"
   }
