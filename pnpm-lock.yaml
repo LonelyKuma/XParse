@@ -12,13 +12,13 @@ specifiers:
   prettier: ^2.5.1
   ts-jest: ^27.1.3
   typescript: ^4.3.5
-  xlex: ^1.4.4
+  xlex: ^1.4.5
 
 dependencies:
   '@yjl9903/setmap': 1.0.6
   assert: 2.0.0
   cac: 6.7.12
-  xlex: 1.4.4
+  xlex: 1.4.5
 
 devDependencies:
   '@types/jest': 27.4.0
@@ -3356,8 +3356,8 @@ packages:
         optional: true
     dev: true
 
-  /xlex/1.4.4:
-    resolution: {integrity: sha512-H4U1Gf69+7uN1xk2lAhlkupTwXdN8KKfvTJhHtc/qtbipBosVP6u4o2Msi1EPoVIQJTEAPyRgJRUL02WViCh8g==}
+  /xlex/1.4.5:
+    resolution: {integrity: sha512-4/PlKsFylX7knDo0MSB+PJCoWyG1rai6xVBj65OqDLO2Eft1owOxRo0DhRkta1Ogn1SlY/LIvtgB1VVdihVTpA==}
     hasBin: true
     dependencies:
       '@yjl9903/setmap': 1.0.6

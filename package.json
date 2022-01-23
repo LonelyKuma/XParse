@@ -38,7 +38,7 @@
     "@yjl9903/setmap": "^1.0.6",
     "assert": "^2.0.0",
     "cac": "^6.7.3",
-    "xlex": "^1.4.4"
+    "xlex": "^1.4.5"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
