@@ -45,7 +45,7 @@
   "dependencies": {
     "@xlor/xlex": "^1.0.0",
     "@yjl9903/setmap": "^1.0.6",
-    "cac": "^6.7.3"
+    "cac": "^6.7.12"
   },
   "devDependencies": {
     "@types/node": "^17.0.10",
