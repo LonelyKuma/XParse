@@ -1,7 +1,7 @@
 import { Token } from '@xlor/xlex';
 
-import { ParserConfig, Production, Dollar, ParserHooks } from './type';
 import { LRDFA } from './LRdfa';
+import { ParserConfig, Production, Dollar, ParserHooks } from './type';
 
 export class LRParser {
   dfa: LRDFA;
