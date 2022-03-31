@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import path from 'path';
 import { readFileSync } from 'fs';
 import { cac } from 'cac';
@@ -26,7 +24,7 @@ cli
     const parser = new LRParser(config);
 
     const text: string[] = [];
-    process.stdin.on('data', data => {
+    process.stdin.on('data', (data) => {
       text.push(String(data));
     });
     process.stdin.on('end', () => {

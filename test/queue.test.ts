@@ -1,3 +1,5 @@
+import { test, expect } from 'vitest';
+
 import { Queue } from '../src/utils/queue';
 
 test('Queue', () => {

@@ -1,13 +1,16 @@
-import assert from 'assert';
-import { ParserConfig, Production, START, Epsilon, Dollar } from './type';
-import { FirstSet } from './first';
 import { SetMap } from '@yjl9903/setmap';
+
+import { FirstSet } from './first';
+import { ParserConfig, Production, START, Epsilon, Dollar } from './type';
+
 import { Queue } from '../utils/queue';
 
 function groupBy(productions: Production[]) {
   const map = new Map<string, Production[]>();
   productions.forEach(({ left }) => map.set(left, []));
-  productions.forEach(prod => (map.get(prod.left) as Production[]).push(prod));
+  productions.forEach((prod) =>
+    (map.get(prod.left) as Production[]).push(prod)
+  );
   return map;
 }
 
@@ -34,7 +37,7 @@ class Item {
     const str = [
       ...(this.pos > 0 ? this.production.right.slice(0, this.pos) : []),
       '.',
-      ...this.production.right.slice(this.pos)
+      ...this.production.right.slice(this.pos),
     ].join(' ');
     return this.production.left + ' -> ' + str + ' , ' + this.lookup;
   }
@@ -78,9 +81,9 @@ export class LRDFA {
     this.types = new Set(config.types);
     this.types.add(START);
 
-    assert(this.isTerminal(config.start) === false);
+    import.meta.vitest?.assert(this.isTerminal(config.start) === false);
     this.productions = [
-      { left: START, right: [config.start], reduce: value => value }
+      { left: START, right: [config.start], reduce: (value) => value },
     ];
 
     for (let i = 0; i < config.productions.length; i++) {
@@ -91,14 +94,14 @@ export class LRDFA {
         );
       }
       for (const { rule, reduce } of right) {
-        assert(this.isTerminal(left) === false);
+        import.meta.vitest?.assert(this.isTerminal(left) === false);
         for (const symbol of rule) {
           this.isTerminal(symbol);
         }
         this.productions.push({
           left,
           right: rule,
-          reduce
+          reduce,
         });
       }
     }
@@ -186,7 +189,9 @@ export class LRDFA {
     }
 
     this.items = C;
-    // this.reportDebug();
+    if (config.debug) {
+      this.reportDebug();
+    }
 
     const Action = C.map(
       () => new Map<string, Production | number | 'Accepted'>()
@@ -195,7 +200,7 @@ export class LRDFA {
     for (let i = 0; i < C.length; i++) {
       const I = C[i];
       for (const item of I) {
-        assert(this.isTerminal(item.lookup));
+        import.meta.vitest?.assert(this.isTerminal(item.lookup));
         if (item.pos === item.production.right.length) {
           const act: 'Accepted' | Production =
             item.production === this.productions[0] &&

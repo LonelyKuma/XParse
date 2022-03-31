@@ -1,5 +1,3 @@
-import assert from 'assert';
-
 import { Production, Epsilon } from './type';
 
 export class FirstSet {
@@ -10,8 +8,8 @@ export class FirstSet {
   readonly isEpsilon: Set<string> = new Set();
 
   private addFirst(x: string, y: string): number {
-    assert(!this.isTerminal(x));
-    assert(this.isTerminal(y));
+    import.meta.vitest?.assert(!this.isTerminal(x) && this.isTerminal(y));
+
     if (!this.first.has(x)) {
       this.first.set(x, [y]);
       return 1;
@@ -52,7 +50,7 @@ export class FirstSet {
         isBreak = true;
         break;
       } else {
-        (this.first.get(item) || []).forEach(symbol => {
+        (this.first.get(item) || []).forEach((symbol) => {
           if (symbol !== Epsilon) res.add(symbol);
         });
         if (!this.isEpsilon.has(item)) {
@@ -75,7 +73,7 @@ export class FirstSet {
     this.tokens = tokens;
     this.types = types;
 
-    tokens.forEach(token => this.first.set(token, [token]));
+    tokens.forEach((token) => this.first.set(token, [token]));
 
     while (true) {
       let haveNew = 0;
@@ -91,7 +89,7 @@ export class FirstSet {
               break;
             } else {
               (this.first.get(item) || []).forEach(
-                symbol => (haveNew += this.addFirst(left, symbol))
+                (symbol) => (haveNew += this.addFirst(left, symbol))
               );
               if (!this.isEpsilon.has(item)) {
                 isBreak = true;
@@ -107,6 +105,6 @@ export class FirstSet {
       if (!haveNew) break;
     }
 
-    this.isEpsilon.forEach(symbol => this.addFirst(symbol, Epsilon));
+    this.isEpsilon.forEach((symbol) => this.addFirst(symbol, Epsilon));
   }
 }

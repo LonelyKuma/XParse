@@ -1,3 +1,5 @@
+import { test, expect } from 'vitest';
+
 import { FirstSet } from '../src/LRparser/first';
 import { Epsilon } from '../src/LRparser/type';
 
@@ -15,7 +17,7 @@ test('FirstSet', () => {
       { left: 'C', right: ['A', 'D'] },
       { left: 'C', right: ['b'] },
       { left: 'D', right: ['a', 'S'] },
-      { left: 'D', right: ['c'] }
+      { left: 'D', right: ['c'] },
     ]
   );
 
@@ -46,38 +48,38 @@ test('FirstSet2', () => {
       'Mul',
       'LRound',
       'RRound',
-      '$'
+      '$',
     ]),
     new Set(['StatmentList', 'Statement', 'Expression', 'Term', 'Factor']),
     [
       {
         left: 'StatmentList',
-        right: ['Statement', 'StatmentList']
+        right: ['Statement', 'StatmentList'],
       },
       { left: 'StatmentList', right: [] },
       {
         left: 'Statement',
-        right: ['LBrace', 'StatmentList', 'RBrace']
+        right: ['LBrace', 'StatmentList', 'RBrace'],
       },
       {
         left: 'Statement',
-        right: ['Expression', 'Semicolon']
+        right: ['Expression', 'Semicolon'],
       },
       {
         left: 'Expression',
-        right: ['Term', 'Plus', 'Expression']
+        right: ['Term', 'Plus', 'Expression'],
       },
       { left: 'Expression', right: ['Term'] },
       {
         left: 'Term',
-        right: ['Factor', 'Mul', 'Term']
+        right: ['Factor', 'Mul', 'Term'],
       },
       { left: 'Term', right: ['Factor'] },
       { left: 'Factor', right: ['Number'] },
       {
         left: 'Factor',
-        right: ['LRound', 'Expression', 'RRound']
-      }
+        right: ['LRound', 'Expression', 'RRound'],
+      },
     ]
   );
 
@@ -85,12 +87,12 @@ test('FirstSet2', () => {
   expect(first.query('Statement')).toStrictEqual([
     'LBrace',
     'LRound',
-    'Number'
+    'Number',
   ]);
   expect(first.query('StatmentList', '$')).toStrictEqual([
     '$',
     'LBrace',
     'LRound',
-    'Number'
+    'Number',
   ]);
 });

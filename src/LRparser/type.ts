@@ -20,6 +20,7 @@ export interface ProductionRule {
 }
 
 export interface ParserConfig {
+  debug?: boolean;
   hooks?: ParserHooks;
   start: string;
   tokens: string[];

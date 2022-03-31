@@ -1,5 +1,3 @@
-import assert from 'assert';
-
 class Node<T> {
   value?: T;
   succ?: Node<T>;
@@ -21,7 +19,7 @@ export class Queue<T> {
   }
 
   push(value: T) {
-    assert(this.tail.succ === undefined);
+    import.meta.vitest?.assert(this.tail.succ === undefined);
     this.tail.succ = new Node(value, undefined);
     this.tail = this.tail.succ;
   }

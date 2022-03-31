@@ -1,4 +1,5 @@
-import { Token } from 'xlex';
+import { Token } from '@xlor/xlex';
+
 import { ParserConfig, Production, Dollar, ParserHooks } from './type';
 import { LRDFA } from './LRdfa';
 
@@ -50,19 +51,19 @@ export class LRParser {
         // report Error
         return {
           ok: false,
-          token: curCh
+          token: curCh,
         };
       }
     }
     if (this.hooks?.created) {
       return {
         ok: true,
-        value: this.hooks.created(val[1], ...args)
+        value: this.hooks.created(val[1], ...args),
       };
     } else {
       return {
         ok: true,
-        value: val[1]
+        value: val[1],
       };
     }
   }
