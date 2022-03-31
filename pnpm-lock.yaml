@@ -7,6 +7,7 @@ specifiers:
   bumpp: ^7.1.1
   cac: ^6.7.12
   husky: ^4.2.3
+  jiti: ^1.13.0
   lint-staged: ^12.3.0
   prettier: ^2.5.1
   typescript: ^4.3.5
@@ -17,6 +18,7 @@ dependencies:
   '@xlor/xlex': 1.0.0
   '@yjl9903/setmap': 1.0.6
   cac: 6.7.12
+  jiti: 1.13.0
 
 devDependencies:
   '@types/node': 17.0.10
@@ -1431,7 +1433,6 @@ packages:
   /jiti/1.13.0:
     resolution: {integrity: sha512-/n9mNxZj/HDSrincJ6RP+L+yXbpnB8FybySBa+IjIaoH9FIxBbrbRT5XUbe8R7zuVM2AQqNMNDDqz0bzx3znOQ==}
     hasBin: true
-    dev: true
 
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}

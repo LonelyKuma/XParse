@@ -12,15 +12,14 @@ cli
   .command('build', 'Build LR Parser')
   .option('--config <config>', 'Config file path', { default: 'xparse.config' })
   .action(async (option: { config: string }) => {
-    const config = await import(path.resolve(process.cwd(), option.config));
-    new LRParser(config);
+    new LRParser(await loadConfig(option.config));
   });
 
 cli
   .command('', 'Run LR Parser')
   .option('--config <config>', 'Config file path', { default: 'xparse.config' })
   .action(async (option: { config: string }) => {
-    const config = await import(path.resolve(process.cwd(), option.config));
+    const config = await loadConfig(option.config);
     const parser = new LRParser(config);
 
     const text: string[] = [];
@@ -37,6 +36,11 @@ cli
       }
     });
   });
+
+async function loadConfig(file: string) {
+  const jiti = (await import('jiti')).default(__filename);
+  return (await jiti(path.resolve(process.cwd(), file))).default;
+}
 
 cli.version(
   JSON.parse(readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8'))
